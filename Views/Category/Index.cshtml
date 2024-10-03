@@ -6,14 +6,17 @@
 
 
 
-The
+
 <div class="row">
     <div class="col-md-7">
-        <ejs-grid id="categories" dataSource="@Model" gridLines="None">
+        <ejs-grid id="categories" dataSource="@Model" gridLines="None" allowExcelExport="true" allowSorting="true" all
+         allowPaging="true" >
+         
+         <e-grid-pagesettings pageSize="5"></e-grid-pagesettings>
             <e-grid-columns>
-                <e-grid-column headerText="Category" field="TitleWithIcon"></e-grid-column>
-                <e-grid-column headerText="Type" template="#typeColumnTemplate"></e-grid-column>
-                <e-grid-column headerText="Actions"></e-grid-column>
+                <e-grid-column headerText="Category" field="TitleWithIcon" allowFiltering="true"></e-grid-column>
+                <e-grid-column headerText="Type" template="#typeColumnTemplate" width ="150px" ></e-grid-column>
+                <e-grid-column headerText="Actions" width="100px" template="#actionColumn"></e-grid-column>
 
             </e-grid-columns>
         </ejs-grid>
@@ -26,6 +29,8 @@ The
 
 </div>
 
+
+
 <script id="typeColumnTemplate" type="text/x-template">
     ${if(Type=="Income")}
          <span class="badge bg-success">${Type}</span>
@@ -33,4 +38,23 @@ The
         <span class="badge bg-danger">${Type}</span>
     ${/if}
 </script>
+
+<script id="actionColumn" type="text/x-template">
+   <div class="d-flex flex-row justify-content-start">
+        <a class="btn btn-sm no-decoration" href="/Category/AddOrEdit/${CategoryId}">
+           <i class="fa-solid fa-pen fa-lg"></i>
+       </a>
+       <form action="/Category/Delete/${CategoryId}" method:"post">
+           @Html.AntiForgeryToken()
+           <button type="submit" class="btn btn-sm btn-link no-decoration"
+             onclick="return confirm(&quot;Are You sure you want to delete this category?&quot;)">
+               <i class="fa-solid fa-trash-can fa-lg text-danger"></i>
+       
+           </button>
+       </form>
+       
+
+   </div>
+</script>
+
 
