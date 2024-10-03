@@ -15,6 +15,10 @@ html {
 html {
   position: relative;
   min-height: 100%;
+  font-family: "Inter"
+}
+*:not(.fa-solid):not(.fa):not(.e-icons){
+    font-family: "Inter"
 }
 
 .e-bigger {
@@ -25,6 +29,20 @@ body {
   margin-bottom: 60px;
   background-color:black;
   color:white;
+}
+
+
+/*buttons*/
+.btn:focus, .btn:active{
+    outline:none !important;
+    box-shadow: none;
+
+}
+
+/*HyperLink*/
+.no-decoration, .no-decoration:hover{
+    text-decoration:none;
+    color:inherit;
 }
 
 /*Radio buttons*/
