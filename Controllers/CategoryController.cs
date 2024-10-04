@@ -18,6 +18,10 @@ namespace Expense_Tracker.Controllers
             _context = context;
         }
 
+
+        
+        //Deleted some methods to simplify the crud project
+
         // GET: Category
         public async Task<IActionResult> Index()
         {
