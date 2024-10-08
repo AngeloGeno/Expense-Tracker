@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Expense_Tracker</title>
+    <title>Expense Tracker</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 @*     <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/27.1.48/material.css" /> *@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -19,7 +19,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Expense_Tracker</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Expense Tracker</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -40,6 +40,21 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-10">
+                <div class=" col-md-7">
+                    <div class="d-flex flex-column mb-5">
+                        <div class="d-flex mb-1">
+                            <h3 class="fw-bold">@ViewData["PageTitle"]</h3>
+                        </div>
+                        @if(ViewData["PageActionText"] != null)
+                        {
+                            <a class="btn btn-success" href="@ViewData["PageActionUrl"]">
+                                @ViewData["PageActionText"]
+
+                            </a>
+                        }
+                    </div>
+                    @*breadcrum*@
+                </div>
                 <main role="main" class="pb-3">
                     @RenderBody()
                 </main>
