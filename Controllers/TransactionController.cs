@@ -27,16 +27,17 @@ namespace Expense_Tracker.Controllers
 
 
         // GET: Transaction/AddOrEdit
-        public IActionResult AddOrEdit(int transactionId=0 )
+        public IActionResult AddOrEdit(int id =0)
         {
             PopulateCategories();
-            if (transactionId == 0)
+            if (id == 0)
             {
                 return View(new Transaction());
             }
             else
             {
-                return View(_context.Transactions.Find(transactionId));
+ 
+                return View(_context.Transactions.Find(id));
             }
 
 
@@ -49,24 +50,23 @@ namespace Expense_Tracker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddOrEdit([Bind("TransactionId,CategoryId,Amount,Note,Date")] Transaction transaction)
         {
-            
+
             if (ModelState.IsValid)
             {
+
                 if (transaction.TransactionId == 0)
                 {
                     _context.Add(transaction);
+                }
+
+                else
+                {
+                    _context.Update(transaction);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
             }
-            else
-            {
-                PopulateCategories();
-                _context.Update(transaction);
-                await _context.SaveChangesAsync();
-                return Redirect(nameof(Index));
-            }
-     
+            PopulateCategories();
             return View(transaction);
         }
     

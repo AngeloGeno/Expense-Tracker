@@ -26,9 +26,9 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
-  background-color:black;
-  color:white;
+    margin-bottom: 60px;
+    background-color: #12161d;
+    color: white;
 }
 
 /*BreadCrumb*/
@@ -172,6 +172,17 @@ body {
     padding: 10px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+}
+
+.main-content {
+   margin-left: 290px
+}
+
+/*Sidebar*/
+#sidebar{
+    background-color: #12161d;
+    border-right: 1px dashed rgb(75,82,85,0.24);
+    padding: 10px 20px;
 }
 
 /*Widget*/
