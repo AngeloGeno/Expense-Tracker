@@ -43,7 +43,66 @@ namespace Expense_Tracker.Controllers
             culture.NumberFormat.CurrencyNegativePattern = 1;
 
             ViewBag.TotalBalance = String.Format(culture, "{0:C0}", TotalBalance);
+
+            //Doughnut chart data 
+            ViewBag.DoughnutChartData = SelectedTransactions
+                .Where(i => i.Category.Type == "Expense")
+                .GroupBy(j => j.Category.CategoryId).Select(k =>
+                new {
+                    categoryTitleWithIcon = k.First().Category.Icon + " " + k.First().Category.Title,
+                    amount = k.Sum(j => j.Amount),
+                    formatedAmount = k.Sum(j => j.Amount).ToString("C0"),
+
+                }
+                ).OrderByDescending(q=> q.amount).ToList();
+
+            //SplineCahrt days
+            List<SplineChartData> IncomeSummamry = SelectedTransactions.Where(m => m.Category.Type == "Income")
+                 .GroupBy(h => h.Date)
+                 .Select(j => new SplineChartData()
+                 {
+                     day = j.First().Date.ToString("dd-MMM"),
+                     income =j.Sum(j => j.Amount)
+                 }).ToList();
+            //SplineCahrt Expense
+            List<SplineChartData> ExpenseSummary = SelectedTransactions.Where(m => m.Category.Type == "Expense")
+                 .GroupBy(h => h.Date)
+                 .Select(j => new SplineChartData()
+                 {
+                     day = j.First().Date.ToString("dd-MMM"),
+                     expense = j.Sum(j => j.Amount)
+                 }).ToList();
+
+            //Combined Income and Expense 
+            string[] Last7Days = Enumerable.Range(0, 7)
+               .Select(i => StarDate.AddDays(i).ToString("dd-MMM"))
+               .ToArray();
+
+
+            ViewBag.SplineChartData = from day in Last7Days
+                                      join income in IncomeSummamry on day equals income.day into dayIncomeJoined
+                                      from income in dayIncomeJoined.DefaultIfEmpty()
+                                      join expense in ExpenseSummary on day equals expense.day into dayExpenseJoined
+                                      from expense in dayExpenseJoined.DefaultIfEmpty()
+                                      select new
+                                      {
+                                          day = day,
+                                          income = income == null ? 0 : income.income,
+                                          expense = expense == null ? 0 : expense.expense,
+                                      };
+
+
             return View();
+
         }
+        public class SplineChartData
+        {
+            public string day;
+            public int income;
+            public int expense;
+
+        }
+
+
     }
 }
